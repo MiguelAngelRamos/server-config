@@ -1,28 +1,31 @@
 server:
-  port: 8085
+  port: ${PORT:8085} # Puerto donde correrá el servicio; se puede configurar dinámicamente con la variable de entorno PORT. Por defecto, es 8085.
+
 spring:
   application:
-    name: product-service
+    name: product-service # Nombre del microservicio, usado para identificarlo en Eureka y otros servicios.
   datasource:
-    url: jdbc:mysql://localhost:3306/ms_productdb
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: academy
+    url: jdbc:mysql://localhost:3306/ms_productdb # URL de conexión a la base de datos MySQL para este microservicio.
+    driver-class-name: com.mysql.cj.jdbc.Driver # Clase del driver para conectar a MySQL.
+    username: root # Usuario para la base de datos MySQL.
+    password: academy # Contraseña del usuario para la base de datos MySQL.
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: update # Configura Hibernate para actualizar automáticamente el esquema de la base de datos.
+    show-sql: true # Activa la visualización de las consultas SQL ejecutadas en la consola.
+
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/ # URL del servidor Eureka para registrar este microservicio.
+
 resilience4j:
-  circuitbreaker:
+  circuitbreaker: # Configuración del Circuit Breaker.
     instances:
-      pricingService:
-        register-health-indicator: true
-        sliding-window-type: COUNT_BASED
-        sliding-window-size: 10
-        minimum-number-of-calls: 5
-        failure-rate-threshold: 50
-        wait-duration-in-open-state: 5000ms
+      pricingService: # Define un Circuit Breaker llamado "pricingService" para este servicio.
+        register-health-indicator: true # Activa el indicador de salud para monitorear el Circuit Breaker.
+        sliding-window-type: COUNT_BASED # Define el tipo de ventana deslizante como basada en el conteo de llamadas.
+        sliding-window-size: 10 # Configura el tamaño de la ventana deslizante para las últimas 10 llamadas.
+        minimum-number-of-calls: 5 # Requiere al menos 5 llamadas para activar el Circuit Breaker.
+        failure-rate-threshold: 50 # Umbral de fallo: si más del 50% de las llamadas fallan, se activa el Circuit Breaker.
+        wait-duration-in-open-state: 5000ms # Tiempo (5 segundos) que el Circuit Breaker permanece en estado "abierto" antes de intentar reintentos.

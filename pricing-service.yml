@@ -1,5 +1,6 @@
 server:
-  port: 8083
+  port: ${PORT:8083} # Usa la variable de entorno PORT; por defecto será 8082 si no se define.
+
 spring:
   application:
     name: pricing-service
@@ -12,7 +13,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
