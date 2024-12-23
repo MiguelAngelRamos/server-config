@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/test_academy
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: academy
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5 # Número máximo de conexiones en el pool
+  jpa:
+    hibernate:
+      ddl-auto: update # Mantiene el esquema de la base de datos actualizado
+    show-sql: true # Muestra las consultas SQL generadas por Hibernate
