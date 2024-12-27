@@ -1,0 +1,2 @@
+report:
+  template: "{company} was founded in {foundation_date} by {founder}. The websites from this company are {web_sites}"
